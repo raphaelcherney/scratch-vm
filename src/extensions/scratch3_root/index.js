@@ -17,7 +17,7 @@ const EventEmitter = require('events');
 const iconURI = 'data:image/png;base64,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';
 
 /**
- * Root EventEmitter for passing information from incomming messages
+ * Root EventEmitter for passing information from incoming messages
  */
 const myEvents = new EventEmitter();
 
@@ -295,13 +295,6 @@ class Root {
             let colorData = data.slice(3, 19);
             this._colorData = colorDataToArray(colorData);
 
-            /*
-            
-            for (i=0; i<16; i++) {
-                this._colorSums[i] = 0;
-            }
-            */
-            
             this._colorSums = new Array(16).fill(0); // Clear previous sum
             for (i=0; i<32; i++) {
                 let detectedColor = this._colorData[i];
@@ -313,17 +306,16 @@ class Root {
             // Marker actuator finished response
             myEvents.emit('markerFinished');
         } else if (device == 1 && command == 8) {
-            // Drive distance finished
+            // Drive distance finished response
             myEvents.emit('motorFinished');
-            //myEvents.emit('motorFinished', data[0], data[1], data[2]);
         } else if (device == 1 && command == 12) {
-            // Rotate angle finished
+            // Rotate angle finished response
             myEvents.emit('motorFinished');
         } else if (device == 5 && command == 0) {
-            // Play tone finished
+            // Play tone finished response
             myEvents.emit('soundFinished');
         } else if (device == 5 && command == 4) {
-            // Say phrase finished
+            // Say phrase finished response
             myEvents.emit('soundFinished');
         }
     }
@@ -647,9 +639,9 @@ class Scratch3RootBlocks {
     whenTouch (args) {
         switch (args.TOUCH) {
         case 'any':
-            return  this._peripheral._touchState.frontLeft || 
-                    this._peripheral._touchState.frontRight || 
-                    this._peripheral._touchState.rearLeft || 
+            return  this._peripheral._touchState.frontLeft ||
+                    this._peripheral._touchState.frontRight ||
+                    this._peripheral._touchState.rearLeft ||
                     this._peripheral._touchState.rearRight;
         case 'front-left':
             return this._peripheral._touchState.frontLeft;
@@ -668,9 +660,9 @@ class Scratch3RootBlocks {
     isTouch (args) {
         switch (args.TOUCH) {
         case 'any':
-            return  this._peripheral._touchState.frontLeft || 
-                    this._peripheral._touchState.frontRight || 
-                    this._peripheral._touchState.rearLeft || 
+            return  this._peripheral._touchState.frontLeft ||
+                    this._peripheral._touchState.frontRight ||
+                    this._peripheral._touchState.rearLeft ||
                     this._peripheral._touchState.rearRight;
         case 'front-left':
             return this._peripheral._touchState.frontLeft;
@@ -756,7 +748,7 @@ class Scratch3RootBlocks {
         this._peripheral.sendPacket(deviceID, commandID, payload);
 
         let timeout = duration + 500;
-        
+
         soundPromise = new Promise((resolve, reject) => {
             myEvents.on('soundFinished', () => {
                 resolve();
@@ -784,11 +776,11 @@ class Scratch3RootBlocks {
             let missingZeros = 16 - payload.length;
             payload = payload.concat(new Array(missingZeros).fill(0));
         }
-        
+
         this._peripheral.sendPacket(deviceID, commandID, payload);
 
         let timeout = 5000;
-        
+
         soundPromise = new Promise((resolve, reject) => {
             myEvents.on('soundFinished', () => {
                 resolve();
@@ -815,11 +807,11 @@ class Scratch3RootBlocks {
         let commandID = 8;
         let payload = int32toArray(distance * 10);
         payload = payload.concat(new Array(12).fill(0));
-            
+
         this._peripheral.sendPacket(deviceID, commandID, payload);
 
         let timeout = distance * 100 + 5000;
-        
+
         drivePromise = new Promise((resolve, reject) => {
             myEvents.on('motorFinished', () => {
                 resolve();
@@ -828,7 +820,7 @@ class Scratch3RootBlocks {
                 reject('Motor Timeout');
             }, timeout);
         });
-        
+
         return drivePromise;
     }
 
@@ -839,11 +831,11 @@ class Scratch3RootBlocks {
         let commandID = 12;
         let payload = int32toArray(angle * 10);
         payload = payload.concat(new Array(12).fill(0));
-            
+
         this._peripheral.sendPacket(deviceID, commandID, payload);
 
         let timeout = angle * 15 + 5000;
-        
+
         drivePromise = new Promise((resolve, reject) => {
             myEvents.on('motorFinished', () => {
                 resolve();
@@ -852,7 +844,7 @@ class Scratch3RootBlocks {
                 reject('Motor Timeout');
             }, timeout);
         });
-        
+
         return drivePromise;
     }
 
@@ -879,7 +871,7 @@ class Scratch3RootBlocks {
         this._peripheral.sendPacket(deviceID, commandID, payload);
 
         let timeout = 5000;
-        
+
         markerPromise = new Promise((resolve, reject) => {
             myEvents.on('markerFinished', () => {
                 resolve();
@@ -888,7 +880,7 @@ class Scratch3RootBlocks {
                 reject('Marker Timeout');
             }, timeout);
         })
-        
+
         return markerPromise;
     }
 
@@ -952,7 +944,7 @@ class Scratch3RootBlocks {
         let payload = int32toArray(left);
         payload = payload.concat(int32toArray(right));
         payload = payload.concat(new Array(8).fill(0));
-            
+
         this._peripheral.sendPacket(deviceID, commandID, payload);
 
         return new Promise(resolve => {
