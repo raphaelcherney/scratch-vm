@@ -562,7 +562,7 @@ class Scratch3RootBlocks {
                     text: formatMessage({
                         id: 'root.whenColor',
                         default: 'when [COLOR] color scanned',
-                        description: 'when color sensor detects a specific color one one of the 32 sensors'
+                        description: 'when color sensor detects a specific color on its 32 sensors'
                     }),
                     blockType: BlockType.HAT,
                     arguments: {
@@ -572,7 +572,27 @@ class Scratch3RootBlocks {
                             defaultValue: 'black'
                         }
                     }
-                }
+                },
+                {
+                    opcode: 'isColor',
+                    text: formatMessage({
+                        id: 'root.isColor',
+                        default: '[COLOR] color scanned on sensor [SENSOR]?',
+                        description: 'does the selected sensor (0-31) see the specified color?'
+                    }),
+                    blockType: BlockType.BOOLEAN,
+                    arguments: {
+                        COLOR: {
+                            type: ArgumentType.STRING,
+                            menu: 'COLOR_MENU',
+                            defaultValue: 'black'
+                        },
+                        SENSOR: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        },
+                    }
+                },
             ],
             menus: {
                 BUMPER_MENU: [
@@ -728,6 +748,28 @@ class Scratch3RootBlocks {
         }
     }
 
+    isColor (args) {
+        let sensorID = Cast.toNumber(args.SENSOR);
+
+        if (sensorID >= 32) {
+            return false;
+        }
+
+        switch (args.COLOR) {
+            case 'black':
+                return (this._peripheral._colorData[sensorID] == 1);
+            case 'red':
+                return (this._peripheral._colorData[sensorID] == 2);
+            case 'green':
+                return (this._peripheral._colorData[sensorID] == 3);
+            case 'blue':
+                return (this._peripheral._colorData[sensorID] == 4);
+            default:
+                log.warn(`Unknown comparison operator in isColor: ${args.COLOR}`);
+                return false;
+            }
+    }
+
     /**
      * Make Root play a tone
      * @param {object} args - the block's arguments.
@@ -793,13 +835,6 @@ class Scratch3RootBlocks {
         return soundPromise;
     }
 
-    /**
-     * Turn specified motor(s) off.
-     * @param {object} args - the block's arguments.
-     * @property {MotorID} MOTOR_ID - the motor(s) to be affected.
-     * @property {int} POWER - the new power level for the motor(s).
-     * @return {Promise} - a Promise that resolves after some delay.
-     */
     driveDistance (args) {
         let distance = Cast.toNumber(args.DISTANCE); // in cm
 
@@ -884,13 +919,6 @@ class Scratch3RootBlocks {
         return markerPromise;
     }
 
-    /**
-     * Turn specified motor(s) off.
-     * @param {object} args - the block's arguments.
-     * @property {MotorID} MOTOR_ID - the motor(s) to be affected.
-     * @property {int} POWER - the new power level for the motor(s).
-     * @return {Promise} - a Promise that resolves after some delay.
-     */
     setLightsRGB (args) {
         let max_val = 100;
         let min_val = 0;
