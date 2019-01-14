@@ -751,7 +751,7 @@ class Scratch3RootBlocks {
     isColor (args) {
         let sensorID = Cast.toNumber(args.SENSOR);
 
-        if (sensorID >= 32) {
+        if (sensorID >= 32 || sensorID < 0) {
             return false;
         }
 
